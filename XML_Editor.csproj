@@ -11,6 +11,7 @@
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
     <PackageReference Include="System.IO.Packaging" Version="7.0.0" />
     <PackageReference Include="Independentsoft.Office.Odf" Version="2.0.740" />
+    <PackageReference Include="Aspose.PDF" Version="23.9.0" />
   </ItemGroup>
 
 </Project>

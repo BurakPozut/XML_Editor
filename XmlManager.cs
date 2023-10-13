@@ -1,7 +1,7 @@
 using System.IO.Packaging;
 using System.Xml;
-using NPOI.XWPF.UserModel;
 using XML_Editor.Models;
+using Aspose.Pdf;
 
 namespace XML_Editor;
 
@@ -18,7 +18,7 @@ public class XmlManager
 
         XmlNodeList nodes = doc.SelectNodes("//text:p[@text:style-name='P10']", namespaceManager);
 
-        if (nodes.Count > 0)
+        if (nodes?.Count > 0)
         {
             foreach (XmlNode node in nodes)
             {
@@ -27,31 +27,38 @@ public class XmlManager
 
             doc.Save(xmlFilePath);
 
-
-            System.Console.WriteLine("Node edited successfully");
+            Console.WriteLine("Node edited successfully");
         }
         else
         {
-            System.Console.WriteLine("Node not found in the XML file");
+            Console.WriteLine("Node not found in the XML file");
             return;
         }
 
-        string odtFilePath = "output.odt";
 
-        using (Package odtPackage = Package.Open(odtFilePath, FileMode.Create))
-        {
-            PackagePart contentPart = odtPackage.CreatePart(new Uri("/content.xml", UriKind.Relative), "application/xml");
+        // string odtFilePath = "output.odt";
 
-            using (Stream contentStream = contentPart.GetStream())
-            {
-                using (StreamWriter contentWriter = new StreamWriter(contentStream))
-                {
-                    string editedXMLContent = File.ReadAllText(xmlFilePath);
+        // using (Package odtPackage = Package.Open(odtFilePath, FileMode.Create))
+        // {
+        //     PackagePart contentPart = odtPackage.CreatePart(new Uri("/content.xml", UriKind.Relative), "application/xml");
 
-                    contentWriter.Write(editedXMLContent);
-                }
-            }
-        }
+        //     using (Stream contentStream = contentPart.GetStream())
+        //     {
+        //         using (StreamWriter contentWriter = new StreamWriter(contentStream))
+        //         {
+        //             string editedXMLContent = File.ReadAllText(xmlFilePath);
+
+        //             contentWriter.Write(editedXMLContent);
+        //         }
+        //     }
+        // }
+
+        //License license = new License();
+
+        Document document = new();
+        document.BindXml(xmlFilePath);
+        document.Save(@"C:\Users\Burak\Desktop\XmlToPdf.pdf");
+
 
         System.Console.WriteLine("ODT document created using the edited XML and saved");
     }
